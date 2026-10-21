@@ -1,10 +1,10 @@
 public class Node {
-    String key;
-    int val;
-    Node next = null;
+    public String key;
+    public int val;
+    public Node next = null;
 
     public Node(String k, int v){
-        String key = k;
-        int val = v;
+        key = k;
+        val = v;
     }
 }

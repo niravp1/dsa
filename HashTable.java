@@ -12,7 +12,7 @@ insert (key, val)
 get(key)
 getAll()
 
-    print all pairs of hash table
+    print all entrys of hash table
 
 array = [F A       ]
 index    0 1 2 3 
@@ -29,7 +29,7 @@ have it be of the node type
 insert(key, val):
     check if key valid  i.e (can't be a array  etc)
     index = hash(key) % len(arr)
-    if pair already exists at array[index] ,
+    if entry already exists at array[index] ,
     traverse linked list to end and apend at the end of linked list 
 
     *the node that is appened should be identifiable by the key (important for get method)
@@ -41,7 +41,7 @@ get(key):
     check if key exists 
 
     get index
-    if pair exists at index traverse linked list until you find node with key's value
+    if entry exists at index traverse linked list until you find node with key's value
 
     if no node found return -1
 
@@ -69,6 +69,13 @@ public class HashTable {
     Node[] array = new Node[5];
 
     public static void main(String[] args) {
+        HashTable table = new HashTable();
+        table.insert("john", 10);
+        table.insert("Michael", 15);
+        table.insert("sarah2", 15);
+        System.out.println(table.get("john"));
+        System.out.println(table.get("john32"));
+        table.getAll();
     }
 
     public void insert(String key, int value) {
@@ -76,16 +83,21 @@ public class HashTable {
             throw new IllegalArgumentException("Insert failed, key is not a string");
         }
         int index = get_index(key);
-        Node pair = array[index];
-        while (pair.next != null) {
-            pair = pair.next;
+        Node entry = array[index];
+        if (entry == null) {
+            array[index] = new Node(key, value);
+            return;
         }
-        pair.next = new Node(key, value);
+        while (entry.next != null) {
+            entry = entry.next;
+        }
+        entry.next = new Node(key, value);
 
     }
 
     public int get_index(String key) {
-        return key.hashCode() % size;
+        return Math.abs(key.hashCode() % size);
+
     }
 
     public int get(String key) {
@@ -93,34 +105,35 @@ public class HashTable {
             throw new IllegalArgumentException("Get failed, key is not a string");
         }
 
-        Node pair = array[get_index(key)];
-        if (pair == null)
+        Node entry = array[get_index(key)];
+        if (entry == null)
             return -1;
 
-        while (!(pair.key.equals(key))) {
-            pair = pair.next;
-            if (pair == null) {
+        while (!(entry.key.equals(key))) {
+            entry = entry.next;
+            if (entry == null) {
                 return -1;
             }
         }
-        if (pair.key.equals(key))
-            return pair.val;
+        if (entry.key.equals(key))
+            return entry.val;
         return -1;
     };
 
     public void getAll() {
         for (int i = 0; i < size; i++) {
-            Node pair = array[i];
-            if (pair == null) {
-                return;
+            Node entry = array[i];
+            if (entry == null){
+                continue;
             }
-            while (pair.next != null) {
+            while (entry.next != null) {
                 System.out
-                        .println(String.format("Entry :%d Key: %s Val: %n Next: %s", i, pair.key, pair.val, pair.next));
-                pair = pair.next;
+                        .println(String.format("Entry:%d %n Key: %s Val: %d Next: %s", i, entry.key, entry.val,
+                                entry.next.key));
+                entry = entry.next;
             }
 
-            System.out.println(String.format("Entry :%d Key: %s Val: %n ", i, pair.key, pair.val));
+            System.out.println(String.format("Entry:%d %n Key: %s Val: %d ", i, entry.key, entry.val));
 
             // two types of print
             // Entry i: Key: Joe Val: 3 <- only one node present
