@@ -128,12 +128,12 @@ public class HashTable {
             }
             while (entry.next != null) {
                 System.out
-                        .println(String.format("Entry:%d %n Key: %s Val: %d Next: %s", i, entry.key, entry.val,
+                        .println(String.format("Entry: %d %n Key: %s Val: %d Next: %s", i, entry.key, entry.val,
                                 entry.next.key));
                 entry = entry.next;
             }
 
-            System.out.println(String.format("Entry:%d %n Key: %s Val: %d ", i, entry.key, entry.val));
+            System.out.println(String.format("Entry: %d %n Key: %s Val: %d ", i, entry.key, entry.val));
 
             // two types of print
             // Entry i: Key: Joe Val: 3 <- only one node present
